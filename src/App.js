@@ -4,7 +4,6 @@ function App() {
   const [tg, setTg] = useState(null);
   const [user, setUser] = useState(null);
 
-  // Параметры персонажа
   const [stats, setStats] = useState({
     strength: 43,
     agility: 37,
@@ -16,16 +15,8 @@ function App() {
   const [level, setLevel] = useState(1);
   const [inventory, setInventory] = useState(['Ключ', 'Зелье']);
 
-  // Опыт
-  const experience = {
-    combat: 30665962,
-    glory: 892500,
-    valor: 200,
-  };
-
   const API_BASE_URL = 'https://localhost:8000';
 
-  // useEffect для инициализации Telegram и загрузки прогресса
   useEffect(() => {
     const telegram = window.Telegram?.WebApp;
     if (telegram) {
@@ -42,7 +33,7 @@ function App() {
         lastName: initData.user?.last_name,
       });
 
-      // Внутри useEffect объявляем функцию loadProgress
+      // Объявляем функцию внутри useEffect
       const loadProgress = async (userId) => {
         if (!userId) return;
         try {
@@ -50,9 +41,10 @@ function App() {
           if (res.ok) {
             const data = await res.json();
             if (Object.keys(data).length > 0) {
-              setStats(data.stats || stats);
-              setLevel(data.level || level);
-              setInventory(data.inventory || inventory);
+              // Используем функциональные обновления чтобы не зависеть от текущего состояния
+              setStats(prev => ({ ...prev, ...data.stats }));
+              setLevel(prev => data.level || prev);
+              setInventory(prev => data.inventory || prev);
             }
           }
         } catch (error) {
@@ -64,9 +56,8 @@ function App() {
         loadProgress(userId);
       }
     }
-  }, []); // запускать один раз при монтировании
+  }, []); // Запускается только один раз при монтировании
 
-  // Функция для сохранения прогресса
   const saveProgress = async () => {
     if (!user) return;
     try {
@@ -80,31 +71,35 @@ function App() {
           inventory,
         }),
       });
-      if (tg) tg.showAlert('Прогресс сохранён!');
+      tg?.showAlert('Прогресс сохранён!');
     } catch (error) {
       console.error('Ошибка при сохранении прогресса:', error);
     }
   };
 
-  // Обработчик повышения уровня
   const handleLevelUp = () => {
-    const newLevel = level + 1;
-    setLevel(newLevel);
-    setStats(prev => ({
-      ...prev,
-      strength: prev.strength + 5,
-      agility: prev.agility + 3,
-      luck: prev.luck + 2,
-    }));
-    if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${newLevel}`);
-    saveProgress();
+    setLevel(prev => {
+      const newLevel = prev + 1;
+      // Обновляем параметры
+      setStats(prevStats => ({
+        ...prevStats,
+        strength: prevStats.strength + 5,
+        agility: prevStats.agility + 3,
+        luck: prevStats.luck + 2,
+      }));
+      if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${newLevel}`);
+      saveProgress();
+      return newLevel;
+    });
   };
 
-  // Добавление предмета в инвентарь
   const addItem = (item) => {
-    setInventory(prev => [...prev, item]);
-    if (tg) tg.showAlert(`Вы получили предмет: ${item}`);
-    saveProgress();
+    setInventory(prev => {
+      const newInventory = [...prev, item];
+      if (tg) tg.showAlert(`Вы получили предмет: ${item}`);
+      saveProgress();
+      return newInventory;
+    });
   };
 
   return (
@@ -127,9 +122,9 @@ function App() {
 
       <div className="experience">
         <h3>Опыт</h3>
-        <p>Боевой: {experience.combat}</p>
-        <p>Слава: {experience.glory}</p>
-        <p>Доблесть: {experience.valor}</p>
+        <p>Боевой: 30665962</p>
+        <p>Слава: 892500</p>
+        <p>Доблесть: 200</p>
       </div>
 
       <div className="inventory">
