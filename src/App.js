@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 function App() {
   const [tg, setTg] = useState(null);
   const [user, setUser] = useState(null);
-  const [level, setLevel] = useState(1);
+  const [level, setLevel] = useState(newLevel);
 
   const API_BASE_URL = 'http://localhost:8000';
 
