@@ -14,11 +14,11 @@ function App() {
     wisdom: 1,
   });
 
-  const [experience, setExperience] = useState({
+  const experience = {
     combat: 30665962,
     glory: 892500,
     valor: 200,
-  });
+  };
 
   const [level, setLevel] = useState(1);
   const [inventory, setInventory] = useState(['Ключ', 'Зелье']);
