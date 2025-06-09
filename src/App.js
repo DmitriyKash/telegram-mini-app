@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 function App() {
   const [tg, setTg] = useState(null);
   const [user, setUser] = useState(null);
-  
+
   // Параметры персонажа
   const [stats, setStats] = useState({
     strength: 43,
@@ -13,36 +13,17 @@ function App() {
     knowledge: 1,
     wisdom: 1,
   });
+  const [level, setLevel] = useState(1);
+  const [inventory, setInventory] = useState(['Ключ', 'Зелье']);
 
+  // Опыт
   const experience = {
     combat: 30665962,
     glory: 892500,
     valor: 200,
   };
 
-  const [level, setLevel] = useState(1);
-  const [inventory, setInventory] = useState(['Ключ', 'Зелье']);
-
-  // Публичный API-адрес
   const API_BASE_URL = 'https://localhost:8000';
-
-  // Функция для загрузки прогресса
-  const loadProgress = async (userId) => {
-    if (!userId) return;
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/get_progress/${userId}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (Object.keys(data).length > 0) {
-          setStats(data.stats || stats);
-          setLevel(data.level || level);
-          setInventory(data.inventory || inventory);
-        }
-      }
-    } catch (error) {
-      console.error('Ошибка при загрузке прогресса:', error);
-    }
-  };
 
   // useEffect для инициализации Telegram и загрузки прогресса
   useEffect(() => {
@@ -61,11 +42,29 @@ function App() {
         lastName: initData.user?.last_name,
       });
 
+      // Внутри useEffect объявляем функцию loadProgress
+      const loadProgress = async (userId) => {
+        if (!userId) return;
+        try {
+          const res = await fetch(`${API_BASE_URL}/api/get_progress/${userId}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (Object.keys(data).length > 0) {
+              setStats(data.stats || stats);
+              setLevel(data.level || level);
+              setInventory(data.inventory || inventory);
+            }
+          }
+        } catch (error) {
+          console.error('Ошибка при загрузке прогресса:', error);
+        }
+      };
+
       if (userId) {
         loadProgress(userId);
       }
     }
-  }, []); // пустой массив зависимостей, чтобы запускать только один раз при монтировании
+  }, []); // запускать один раз при монтировании
 
   // Функция для сохранения прогресса
   const saveProgress = async () => {
@@ -87,6 +86,7 @@ function App() {
     }
   };
 
+  // Обработчик повышения уровня
   const handleLevelUp = () => {
     const newLevel = level + 1;
     setLevel(newLevel);
@@ -97,20 +97,21 @@ function App() {
       luck: prev.luck + 2,
     }));
     if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${newLevel}`);
-    saveProgress(); // сохраняем прогресс после повышения уровня
+    saveProgress();
   };
 
+  // Добавление предмета в инвентарь
   const addItem = (item) => {
     setInventory(prev => [...prev, item]);
     if (tg) tg.showAlert(`Вы получили предмет: ${item}`);
-    saveProgress(); // сохраняем прогресс после получения предмета
+    saveProgress();
   };
 
   return (
     <div className="App">
       <h1>Neverlands RPG</h1>
       <h2>Привет, {user?.firstName || 'Игрок'}!</h2>
-      
+
       <div className="character-stats">
         <h3>Параметры персонажа</h3>
         <ul>
