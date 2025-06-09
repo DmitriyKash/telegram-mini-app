@@ -1,11 +1,27 @@
 import { useEffect, useState } from 'react';
-import './App.css';
 
 function App() {
   const [tg, setTg] = useState(null);
   const [user, setUser] = useState(null);
-  const [location, setLocation] = useState('start'); // текущая локация
-  const [inventory, setInventory] = useState([]); // инвентарь
+
+  // Параметры персонажа
+  const [stats, setStats] = useState({
+    strength: 43,
+    agility: 37,
+    luck: 52,
+    health: 40,
+    knowledge: 1,
+    wisdom: 1,
+  });
+
+  const [experience, setExperience] = useState({
+    combat: 30665962,
+    glory: 892500,
+    valor: 200,
+  });
+
+  const [level, setLevel] = useState(1);
+  const [inventory, setInventory] = useState(['Ключ', 'Зелье']);
 
   useEffect(() => {
     const telegram = window.Telegram?.WebApp;
@@ -13,83 +29,76 @@ function App() {
       setTg(telegram);
       telegram.ready();
       telegram.expand();
-      
+
       const initData = telegram.initDataUnsafe;
       setUser({
         id: initData.user?.id,
         firstName: initData.user?.first_name,
-        lastName: initData.user?.last_name
-      });
-      
-      telegram.MainButton.setText('Инвентарь');
-      telegram.MainButton.show();
-      telegram.MainButton.onClick(() => {
-        // Показываем инвентарь
-        telegram.showAlert(`Инвентарь: ${inventory.join(', ') || 'пуст'}`);
+        lastName: initData.user?.last_name,
       });
     }
+  }, []);
 
-    return () => {
-      if (telegram) {
-        telegram.MainButton.offClick();
-      }
-    };
-  }, [inventory]);
-
-  const handleClose = () => {
-    tg?.close();
+  const handleLevelUp = () => {
+    setLevel(prev => prev + 1);
+    // Можно добавлять бонусы к параметрам при повышении
+    setStats(prev => ({
+      ...prev,
+      strength: prev.strength + 5,
+      agility: prev.agility + 3,
+      luck: prev.luck + 2,
+    }));
+    if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${level + 1}`);
   };
 
-  // Перемещение по локациям
-  const moveTo = (newLocation) => {
-    setLocation(newLocation);
-    tg?.showAlert(`Вы переместились в ${newLocation}`);
+  const addItem = (item) => {
+    setInventory(prev => [...prev, item]);
+    tg?.showAlert(`Вы получили предмет: ${item}`);
   };
-
-  // Взаимодействие с объектом
-  const interact = () => {
-    if (location === 'start') {
-      // пример взаимодействия
-      setInventory(prev => [...prev, 'Ключ']);
-      tg?.showAlert('Вы нашли ключ!');
-    } else {
-      tg?.showAlert('Нет объектов для взаимодействия здесь.');
-    }
-  };
-
-  if (!tg) {
-    return <div>Loading Telegram Web App...</div>;
-  }
 
   return (
     <div className="App">
-      <h1>Neverlands 🌍</h1>
+      <h1>Neverlands RPG</h1>
       <h2>Привет, {user?.firstName || 'Игрок'}!</h2>
       
-      <div className="game-area">
-        <h3>Текущая локация: {location}</h3>
-        <button onClick={() => moveTo('forest')}>Идти в лес</button>
-        <button onClick={() => moveTo('cave')}>Войти в пещеру</button>
-        <button onClick={interact}>Взаимодействовать</button>
-      </div>
-
-      <div className="status">
-        <h4>Инвентарь:</h4>
+      <div className="character-stats">
+        <h3>Параметры персонажа</h3>
         <ul>
-          {inventory.length > 0 ? (
-            inventory.map((item, index) => <li key={index}>{item}</li>)
-          ) : (
-            <li>Пусто</li>
-          )}
+          <li>Сила: {stats.strength}</li>
+          <li>Ловкость: {stats.agility}</li>
+          <li>Удача: {stats.luck}</li>
+          <li>Здоровье: {stats.health}</li>
+          <li>Знания: {stats.knowledge}</li>
+          <li>Мудрость: {stats.wisdom}</li>
         </ul>
+        <button onClick={handleLevelUp}>Повысить уровень</button>
       </div>
 
-      <button className="button" onClick={() => tg.showAlert('Добро пожаловать в Neverlands!')}>
-        Поздороваться
-      </button>
-      <button className="button close-button" onClick={handleClose}>
-        Выйти
-      </button>
+      <div className="experience">
+        <h3>Опыт</h3>
+        <p>Боевой: {experience.combat}</p>
+        <p>Слава: {experience.glory}</p>
+        <p>Доблесть: {experience.valor}</p>
+      </div>
+
+      <div className="inventory">
+        <h3>Инвентарь</h3>
+        <ul>
+          {inventory.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+        <button onClick={() => addItem('Зелье')}>Получить Зелье</button>
+      </div>
+
+      <div className="actions">
+        <button onClick={() => tg?.showAlert('Играем в Neverlands!')}>
+          Поздороваться
+        </button>
+        <button className="close-button" onClick={() => tg?.close()}>
+          Выйти
+        </button>
+      </div>
     </div>
   );
 }
