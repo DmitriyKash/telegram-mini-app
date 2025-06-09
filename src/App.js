@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 function App() {
   const [tg, setTg] = useState(null);
   const [user, setUser] = useState(null);
-  const [level, setLevel] = useState(newLevel);
+  const [level, setLevel] = useState(null); // Изначально null, чтобы показывать загрузку
 
   const API_BASE_URL = 'http://localhost:8000';
 
+  // Инициализация Telegram и получение данных о пользователе
   useEffect(() => {
     const telegram = window.Telegram?.WebApp;
     if (telegram) {
@@ -21,29 +22,36 @@ function App() {
         firstName: initData.user?.first_name,
         lastName: initData.user?.last_name,
       });
-
-      // Загружаем текущий уровень при старте
-      const loadProgress = async (userId) => {
-        if (!userId) return;
-        try {
-          const res = await fetch(`${API_BASE_URL}/api/get_progress/${userId}`);
-          if (res.ok) {
-            const data = await res.json();
-            if (Object.keys(data).length > 0) {
-              setLevel(prev => data.level || prev);
-            }
-          }
-        } catch (error) {
-          console.error('Ошибка при загрузке прогресса:', error);
-        }
-      };
-
-      if (userId) {
-        loadProgress(userId);
-      }
     }
   }, []);
 
+  // Загрузка прогресса пользователя после установки user
+  useEffect(() => {
+    const loadProgress = async () => {
+      if (user?.id) {
+        try {
+          const res = await fetch(`${API_BASE_URL}/api/get_progress/${user.id}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.level !== undefined) {
+              setLevel(data.level);
+            } else {
+              setLevel(1); // Если данных нет, начинаем с 1 или другого начального уровня
+            }
+          } else {
+            setLevel(1); // Обработка случая, если API возвращает ошибку
+          }
+        } catch (error) {
+          console.error('Ошибка при загрузке прогресса:', error);
+          setLevel(1); // В случае ошибки тоже задаем начальный уровень
+        }
+      }
+    };
+
+    loadProgress();
+  }, [user?.id]);
+
+  // Функция для сохранения прогресса
   const saveProgress = async (newLevel) => {
     if (!user) return;
     try {
@@ -60,14 +68,20 @@ function App() {
     }
   };
 
+  // Обработчик повышения уровня
   const handleLevelUp = () => {
     setLevel(prev => {
-      const newLevel = prev + 1;
+      const newLevel = (prev ?? 0) + 1; // Если prev null, считаем его 0
       saveProgress(newLevel);
       if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${newLevel}`);
       return newLevel;
     });
   };
+
+  // Пока уровень не загружен, показываем индикатор
+  if (level === null) {
+    return <div>Загрузка...</div>;
+  }
 
   return (
     <div className="App">
