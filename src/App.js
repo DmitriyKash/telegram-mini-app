@@ -26,30 +26,36 @@ function App() {
   }, []);
 
   // Загрузка прогресса пользователя после установки user
-  useEffect(() => {
-    const loadProgress = async () => {
-      if (user?.id) {
-        try {
-          const res = await fetch(`${API_BASE_URL}/api/get_progress/${user.id}`);
-          if (res.ok) {
-            const data = await res.json();
-            if (data.level !== undefined) {
-              setLevel(data.level);
-            } else {
-              setLevel(1); // Если данных нет, начинаем с 1 или другого начального уровня
-            }
+useEffect(() => {
+  const loadProgress = async () => {
+    if (user?.id) {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/get_progress/${user.id}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.level !== undefined && data.level !== null) {
+            setLevel(data.level);
           } else {
-            setLevel(1); // Обработка случая, если API возвращает ошибку
+            setLevel(1); // Новый игрок — начинаем с 1
           }
-        } catch (error) {
-          console.error('Ошибка при загрузке прогресса:', error);
-          setLevel(1); // В случае ошибки тоже задаем начальный уровень
+        } else {
+          // Можно проверить статус и обработать случаи, например 404 — нет данных
+          if (res.status === 404) {
+            setLevel(1);
+          } else {
+            // Другие ошибки
+            setLevel(1);
+          }
         }
+      } catch (error) {
+        console.error('Ошибка при загрузке прогресса:', error);
+        setLevel(1);
       }
-    };
+    }
+  };
 
-    loadProgress();
-  }, [user?.id]);
+  loadProgress();
+}, [user?.id]);
 
   // Функция для сохранения прогресса
   const saveProgress = async (newLevel) => {
