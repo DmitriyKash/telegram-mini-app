@@ -23,10 +23,28 @@ function App() {
   const [level, setLevel] = useState(1);
   const [inventory, setInventory] = useState(['Ключ', 'Зелье']);
 
-  // Укажите ваш публичный API-адрес
+  // Публичный API-адрес
   const API_BASE_URL = 'https://localhost:8000';
 
-  // Загрузка прогресса при старте
+  // Функция для загрузки прогресса
+  const loadProgress = async (userId) => {
+    if (!userId) return;
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/get_progress/${userId}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (Object.keys(data).length > 0) {
+          setStats(data.stats || stats);
+          setLevel(data.level || level);
+          setInventory(data.inventory || inventory);
+        }
+      }
+    } catch (error) {
+      console.error('Ошибка при загрузке прогресса:', error);
+    }
+  };
+
+  // useEffect для инициализации Telegram и загрузки прогресса
   useEffect(() => {
     const telegram = window.Telegram?.WebApp;
     if (telegram) {
@@ -35,16 +53,19 @@ function App() {
       telegram.expand();
 
       const initData = telegram.initDataUnsafe;
+      const userId = initData.user?.id;
+
       setUser({
-        id: initData.user?.id,
+        id: userId,
         firstName: initData.user?.first_name,
         lastName: initData.user?.last_name,
       });
 
-      // Загружаем прогресс с сервера
-      loadProgress(initData.user?.id);
+      if (userId) {
+        loadProgress(userId);
+      }
     }
-  }, []);
+  }, []); // пустой массив зависимостей, чтобы запускать только один раз при монтировании
 
   // Функция для сохранения прогресса
   const saveProgress = async () => {
@@ -66,33 +87,16 @@ function App() {
     }
   };
 
-  // Функция для загрузки прогресса
-  const loadProgress = async (userId) => {
-    if (!userId) return;
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/get_progress/${userId}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (Object.keys(data).length > 0) {
-          setStats(data.stats || stats);
-          setLevel(data.level || level);
-          setInventory(data.inventory || inventory);
-        }
-      }
-    } catch (error) {
-      console.error('Ошибка при загрузке прогресса:', error);
-    }
-  };
-
   const handleLevelUp = () => {
-    setLevel(prev => prev + 1);
+    const newLevel = level + 1;
+    setLevel(newLevel);
     setStats(prev => ({
       ...prev,
       strength: prev.strength + 5,
       agility: prev.agility + 3,
       luck: prev.luck + 2,
     }));
-    if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${level + 1}`);
+    if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${newLevel}`);
     saveProgress(); // сохраняем прогресс после повышения уровня
   };
 
