@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 function App() {
   const [tg, setTg] = useState(null);
   const [user, setUser] = useState(null);
-
+  
   // Параметры персонажа
   const [stats, setStats] = useState({
     strength: 43,
@@ -23,6 +23,10 @@ function App() {
   const [level, setLevel] = useState(1);
   const [inventory, setInventory] = useState(['Ключ', 'Зелье']);
 
+  // Укажите ваш публичный API-адрес
+  const API_BASE_URL = 'https://localhost:8000';
+
+  // Загрузка прогресса при старте
   useEffect(() => {
     const telegram = window.Telegram?.WebApp;
     if (telegram) {
@@ -36,12 +40,52 @@ function App() {
         firstName: initData.user?.first_name,
         lastName: initData.user?.last_name,
       });
+
+      // Загружаем прогресс с сервера
+      loadProgress(initData.user?.id);
     }
   }, []);
 
+  // Функция для сохранения прогресса
+  const saveProgress = async () => {
+    if (!user) return;
+    try {
+      await fetch(`${API_BASE_URL}/api/save_progress`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          stats,
+          level,
+          inventory,
+        }),
+      });
+      if (tg) tg.showAlert('Прогресс сохранён!');
+    } catch (error) {
+      console.error('Ошибка при сохранении прогресса:', error);
+    }
+  };
+
+  // Функция для загрузки прогресса
+  const loadProgress = async (userId) => {
+    if (!userId) return;
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/get_progress/${userId}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (Object.keys(data).length > 0) {
+          setStats(data.stats || stats);
+          setLevel(data.level || level);
+          setInventory(data.inventory || inventory);
+        }
+      }
+    } catch (error) {
+      console.error('Ошибка при загрузке прогресса:', error);
+    }
+  };
+
   const handleLevelUp = () => {
     setLevel(prev => prev + 1);
-    // Можно добавлять бонусы к параметрам при повышении
     setStats(prev => ({
       ...prev,
       strength: prev.strength + 5,
@@ -49,11 +93,13 @@ function App() {
       luck: prev.luck + 2,
     }));
     if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${level + 1}`);
+    saveProgress(); // сохраняем прогресс после повышения уровня
   };
 
   const addItem = (item) => {
     setInventory(prev => [...prev, item]);
-    tg?.showAlert(`Вы получили предмет: ${item}`);
+    if (tg) tg.showAlert(`Вы получили предмет: ${item}`);
+    saveProgress(); // сохраняем прогресс после получения предмета
   };
 
   return (
