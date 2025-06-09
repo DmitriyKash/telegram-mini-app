@@ -86,7 +86,7 @@ function App() {
   return (
     <div className="App">
       <h1>Neverlands RPG</h1>
-      <h2>Привет, {user?.firstName || user?.last_name || 'Игрок'}!</h2>
+      <h2>Привет, {user?.firstName ?? user?.last_name ?? 'Игрок'}!</h2>
       <p>Уровень: {level}</p>
       <button onClick={handleLevelUp}>Повысить уровень</button>
     </div>
