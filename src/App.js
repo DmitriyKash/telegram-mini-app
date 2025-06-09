@@ -5,7 +5,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [level, setLevel] = useState(1);
 
-  const API_BASE_URL = 'https://localhost:8000';
+  const API_BASE_URL = 'http://localhost:8000';
 
   useEffect(() => {
     const telegram = window.Telegram?.WebApp;
