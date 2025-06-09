@@ -22,6 +22,7 @@ function App() {
         lastName: initData.user?.last_name,
       });
 
+      // Загружаем текущий уровень при старте
       const loadProgress = async (userId) => {
         if (!userId) return;
         try {
@@ -43,10 +44,26 @@ function App() {
     }
   }, []);
 
+  const saveProgress = async (newLevel) => {
+    if (!user) return;
+    try {
+      await fetch(`${API_BASE_URL}/api/save_progress`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          level: newLevel,
+        }),
+      });
+    } catch (error) {
+      console.error('Ошибка при сохранении прогресса:', error);
+    }
+  };
+
   const handleLevelUp = () => {
     setLevel(prev => {
       const newLevel = prev + 1;
-      // Можно отправить обновление на сервер, если нужно
+      saveProgress(newLevel);
       if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${newLevel}`);
       return newLevel;
     });
