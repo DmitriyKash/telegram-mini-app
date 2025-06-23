@@ -1,40 +1,7 @@
 .App {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
-
-.user-info {
-  margin: 20px 0;
-  padding: 15px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.button {
-  background-color: #0088cc;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 25px;
-  border: none;
-  cursor: pointer;
-  margin: 10px;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-
-.button:hover {
-  background-color: #0077b3;
-  transform: translateY(-2px);
-}
-
-.close-button {
-  background-color: #ff4444;
-}
-
-.close-button:hover {
-  background-color: #cc0000;
+  min-height: 100vh; /* чтобы покрывать весь экран по вертикали */
+  background-image: url('assets/bg.png');
+  background-size: cover; /* чтобы изображение покрывало весь фон, сохраняя пропорции */
+  background-position: center; /* центрирование изображения */
+  background-repeat: no-repeat; /* чтобы изображение не повторялось */
 }
