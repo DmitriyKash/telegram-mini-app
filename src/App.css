@@ -1,6 +1,6 @@
 .App {
   min-height: 100vh; /* чтобы покрывать весь экран по вертикали */
-  background-image: url('assets/bg.png');
+  background-image: url('assets/bg2.png');
   background-size: cover; /* чтобы изображение покрывало весь фон, сохраняя пропорции */
   background-position: center; /* центрирование изображения */
   background-repeat: no-repeat; /* чтобы изображение не повторялось */
@@ -18,6 +18,7 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
   text-shadow: 0 0 3px #000;
+  margin-top: 300px;
 }
 
 button:hover {
