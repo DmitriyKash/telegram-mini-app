@@ -68,7 +68,7 @@ function App() {
 //   }
 
   if (started) {
-    return <Character userId={user?.id} />;
+    return <Character userId={user?.firstName} />;
   }
 
   return (
