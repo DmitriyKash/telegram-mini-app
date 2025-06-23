@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Character from './components/Character';
+import './App.css';
 
 function App() {
   // Удалите переменную tg, если она не используется
