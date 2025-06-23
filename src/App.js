@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import Character from './components/Character'; // импорт компонента "Ваш персонаж"
+import Character from './components/Character';
 
 function App() {
-  const [setTg] = useState(null);
+  const [tg, setTg] = useState(null);
   const [user, setUser] = useState(null);
-  const [level, setLevel] = useState(null); // уровень игрока
-  const [started, setStarted] = useState(false); // чтобы понять, началась ли игра
+  const [level, setLevel] = useState(null);
+  const [started, setStarted] = useState(false);
 
   const API_BASE_URL = 'http://localhost:8000';
 
-  // Инициализация Telegram и получение данных
+  // Инициализация Telegram
   useEffect(() => {
     const telegram = window.Telegram?.WebApp;
     if (telegram) {
@@ -25,9 +25,10 @@ function App() {
         lastName: initData?.user?.last_name,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Загрузка прогресса после получения user
+  // Загрузка прогресса
   useEffect(() => {
     const loadProgress = async () => {
       if (user?.id) {
@@ -38,7 +39,7 @@ function App() {
             if (data.level !== undefined && data.level !== null) {
               setLevel(data.level);
             } else {
-              setLevel(1); // Новый игрок
+              setLevel(1);
             }
           } else {
             if (res.status === 404) {
@@ -53,53 +54,21 @@ function App() {
         }
       }
     };
-
     loadProgress();
   }, [user?.id]);
 
-  // Сохранение прогресса
-//   const saveProgress = async (newLevel) => {
-//     if (!user) return;
-//     try {
-//       await fetch(`${API_BASE_URL}/api/save_progress`, {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//           userId: user.id,
-//           level: newLevel,
-//         }),
-//       });
-//     } catch (error) {
-//       console.error('Ошибка при сохранении прогресса:', error);
-//     }
-//   };
-
-  // Обработчик начала игры
   const handleStartGame = () => {
     setStarted(true);
   };
 
-  // Обработчик повышения уровня (для теста)
-//   const handleLevelUp = () => {
-//     setLevel(prev => {
-//       const newLevel = (prev ?? 0) + 1;
-//       saveProgress(newLevel);
-//       if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${newLevel}`);
-//       return newLevel;
-//     });
-//   };
-
-  // Пока уровень не загружен, показываем индикатор
   if (level === null && !started) {
     return <div>Загрузка...</div>;
   }
 
-  // Если игра запущена, показываем компонент "Ваш персонаж"
   if (started) {
     return <Character userId={user?.id} />;
   }
 
-  // Главная страница перед началом игры
   return (
     <div className="App" style={{ textAlign: 'center', padding: '50px' }}>
       <h1>Neverlands RPG</h1>
