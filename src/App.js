@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import Character from './components/Character';
 
 function App() {
-  const [tg, setTg] = useState(null);
+  // Удалите переменную tg, если она не используется
+  // const [tg, setTg] = useState(null);
   const [user, setUser] = useState(null);
   const [level, setLevel] = useState(null);
   const [started, setStarted] = useState(false);
@@ -13,7 +14,7 @@ function App() {
   useEffect(() => {
     const telegram = window.Telegram?.WebApp;
     if (telegram) {
-      setTg(telegram);
+      // setTg(telegram); // убрали
       telegram.ready();
 
       const initData = telegram.initDataUnsafe;
