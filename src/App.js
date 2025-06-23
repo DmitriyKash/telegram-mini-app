@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Character from './Character'; // импорт компонента "Ваш персонаж"
+//import Character from './Character'; // импорт компонента "Ваш персонаж"
 
 function App() {
   const [tg, setTg] = useState(null);
@@ -95,9 +95,9 @@ function App() {
   }
 
   // Если игра запущена, показываем компонент "Ваш персонаж"
-  if (started) {
-    return <Character userId={user?.id} />;
-  }
+//   if (started) {
+//     return <Character userId={user?.id} />;
+//   }
 
   // Главная страница перед началом игры
   return (
