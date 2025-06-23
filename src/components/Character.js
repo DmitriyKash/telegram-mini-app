@@ -42,7 +42,7 @@ function Character({ userId }) {
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
       {/* Название и уровень */}
       <h2>
-        {characterData.firstName} [{characterData.level}]
+        {characterData.userId?.firstName} [{characterData.level}]
       </h2>
       
       {/* Аватар */}
