@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
-function Character() {
+function Character({ userId }) {
   const [characterData, setCharacterData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [user, setUser] = useState(null);
   const API_BASE_URL = 'http://localhost:8000';
 
   // Получение данных из Telegram
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const telegram = window.Telegram?.WebApp;
     if (telegram) {
@@ -23,7 +23,7 @@ function Character() {
     }
   }, []);
 
-  // Загрузка персонажа при изменении user
+  // Загрузка данных персонажа
   useEffect(() => {
     const fetchCharacter = async () => {
       if (!user?.id) {

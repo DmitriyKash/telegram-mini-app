@@ -6,7 +6,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [started, setStarted] = useState(false);
 
-  // Инициализация Telegram при монтировании компонента
+  // Инициализация Telegram при монтировании
   useEffect(() => {
     const telegram = window.Telegram?.WebApp;
     if (telegram) {
@@ -35,7 +35,7 @@ function App() {
     }
   };
 
-  // Если пользователь еще не инициализирован и игра не началась
+  // Пока не получены данные пользователя
   if (!user) {
     return (
       <div style={{ textAlign: 'center', padding: '50px' }}>
@@ -45,12 +45,12 @@ function App() {
     );
   }
 
-  // Если игра началась
+  // После начала игры
   if (started) {
     return <Character userId={user.id} />;
   }
 
-  // Основной экран с приветствием и кнопкой начать
+  // Экран приветствия
   return (
     <div className="App" style={{ textAlign: 'center', padding: '50px' }}>
       <h2>
