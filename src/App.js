@@ -74,6 +74,7 @@ function App() {
   return (
     <div className="App" style={{ textAlign: 'center', padding: '50px' }}>
       <h2>Привет, {user?.firstName ?? user?.last_name ?? 'Игрок'}!</h2>
+      <h1>Land of Chaos</h1>
       <button onClick={handleStartGame}>
         Начать играть
       </button>

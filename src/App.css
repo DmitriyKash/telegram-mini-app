@@ -1,11 +1,15 @@
 .App {
   min-height: 100vh; /* чтобы покрывать весь экран по вертикали */
-  background-image: url('assets/bg2.png');
+  background-image: url('assets/bg3.png');
   background-size: cover; /* чтобы изображение покрывало весь фон, сохраняя пропорции */
   background-position: center; /* центрирование изображения */
   background-repeat: no-repeat; /* чтобы изображение не повторялось */
 }
-
+h1 {
+  margin: 0 auto;
+  color: #f7f7f7;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 button {
   background: linear-gradient(135deg, #ff4500, #8a2be2); /* яркий контраст: огненно-оранжевый и фиолетовый */
   color: #fff;
