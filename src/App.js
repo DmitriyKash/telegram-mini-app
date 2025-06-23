@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Character from './components/Character'; // импорт компонента "Ваш персонаж"
 
 function App() {
-//   const [tg, setTg] = useState(null);
+  const [setTg] = useState(null);
   const [user, setUser] = useState(null);
   const [level, setLevel] = useState(null); // уровень игрока
   const [started, setStarted] = useState(false); // чтобы понять, началась ли игра
