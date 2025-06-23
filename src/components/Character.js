@@ -4,9 +4,25 @@ function Character({ userId }) {
   const [characterData, setCharacterData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+    const [user, setUser] = useState(null);
   const API_BASE_URL = 'http://localhost:8000';
+useEffect(() => {
+    const telegram = window.Telegram?.WebApp;
+    if (telegram) {
+      // setTg(telegram); // убрали
+      telegram.ready();
 
+      const initData = telegram.initDataUnsafe;
+      const userId = initData?.user?.id;
+
+      setUser({
+        id: userId,
+        firstName: initData?.user?.first_name,
+        lastName: initData?.user?.last_name,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     const fetchCharacter = async () => {
       if (!userId) {
