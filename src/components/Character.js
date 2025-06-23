@@ -41,9 +41,9 @@ function Character({ userId }) {
   return (
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
       {/* Название и уровень */}
-      <h2>
-        {characterData.userId?.firstName} [{characterData.level}]
-      </h2>
+        <h2>
+            {user?.firstName} [{characterData.level}]
+        </h2>
       
       {/* Аватар */}
       <div style={{ margin: '20px 0' }}>
