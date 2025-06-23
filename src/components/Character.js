@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
+import './Character.css';
 
 function Character({ userId }) {
   const [characterData, setCharacterData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   const API_BASE_URL = 'http://localhost:8000';
-useEffect(() => {
+
+  useEffect(() => {
     const telegram = window.Telegram?.WebApp;
     if (telegram) {
-      // setTg(telegram); // убрали
       telegram.ready();
-
       const initData = telegram.initDataUnsafe;
       const userId = initData?.user?.id;
 
@@ -21,8 +21,8 @@ useEffect(() => {
         lastName: initData?.user?.last_name,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
     const fetchCharacter = async () => {
       if (!userId) {
@@ -52,36 +52,33 @@ useEffect(() => {
   if (loading) return <div>Загрузка персонажа...</div>;
   if (error) return <div style={{ color: 'red' }}>{error}</div>;
 
-  if (!characterData) return <div>Данные персонажа не найдены</div>;
-
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
+    <div className="character-container">
       {/* Название и уровень */}
-        <h2>
-            {user?.firstName} [{characterData.level}]
-        </h2>
+      <div className="character-name">
+        {user?.firstName} [{characterData.level}]
+      </div>
       
       {/* Аватар */}
-      <div style={{ margin: '20px 0' }}>
+      <div className="avatar-wrapper">
         <img
           src={characterData.avatarUrl}
           alt="Персонаж"
-          style={{ width: '200px', height: '200px', objectFit: 'cover', borderRadius: '10px' }}
+          className="avatar-img"
         />
       </div>
       
       {/* Характеристики */}
-      <div style={{ textAlign: 'left', lineHeight: '1.5' }}>
+      <div className="stats">
         <p>Сила: {characterData.strength}</p>
         <p>Ловкость: {characterData.agility}</p>
         <p>Удача: {characterData.luck}</p>
         <p>Здоровье: {characterData.health}</p>
-        {/* Можно добавить другие параметры */}
       </div>
       
       {/* Меню или дополнительные вкладки */}
-      <div style={{ marginTop: '20px' }}>
-        <button style={{ marginRight: '10px' }}>Инвентарь</button>
+      <div className="buttons-container">
+        <button>Инвентарь</button>
         <button>Настройки</button>
       </div>
     </div>
