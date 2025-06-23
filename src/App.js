@@ -6,7 +6,7 @@ function App() {
   // Удалите переменную tg, если она не используется
   // const [tg, setTg] = useState(null);
   const [user, setUser] = useState(null);
-  const [level, setLevel] = useState(null);
+//   const [level, setLevel] = useState(null);
   const [started, setStarted] = useState(false);
 
   const API_BASE_URL = 'http://localhost:8000';
@@ -31,33 +31,33 @@ function App() {
   }, []);
 
   // Загрузка прогресса
-  useEffect(() => {
-    const loadProgress = async () => {
-      if (user?.id) {
-        try {
-          const res = await fetch(`${API_BASE_URL}/api/get_progress/${user.id}`);
-          if (res.ok) {
-            const data = await res.json();
-            if (data.level !== undefined && data.level !== null) {
-              setLevel(data.level);
-            } else {
-              setLevel(1);
-            }
-          } else {
-            if (res.status === 404) {
-              setLevel(1);
-            } else {
-              setLevel(1);
-            }
-          }
-        } catch (error) {
-          console.error('Ошибка при загрузке прогресса:', error);
-          setLevel(1);
-        }
-      }
-    };
-    loadProgress();
-  }, [user?.id]);
+//   useEffect(() => {
+//     const loadProgress = async () => {
+//       if (user?.id) {
+//         try {
+//           const res = await fetch(`${API_BASE_URL}/api/get_progress/${user.id}`);
+//           if (res.ok) {
+//             const data = await res.json();
+//             if (data.level !== undefined && data.level !== null) {
+//               setLevel(data.level);
+//             } else {
+//               setLevel(1);
+//             }
+//           } else {
+//             if (res.status === 404) {
+//               setLevel(1);
+//             } else {
+//               setLevel(1);
+//             }
+//           }
+//         } catch (error) {
+//           console.error('Ошибка при загрузке прогресса:', error);
+//           setLevel(1);
+//         }
+//       }
+//     };
+//     loadProgress();
+//   }, [user?.id]);
 
   const handleStartGame = () => {
     setStarted(true);
@@ -75,7 +75,7 @@ function App() {
     <div className="App" style={{ textAlign: 'center', padding: '50px' }}>
       <h2>Привет, {user?.firstName ?? user?.last_name ?? 'Игрок'}!</h2>
       <h1>Land of Chaos</h1>
-      <button onClick={handleStartGame}>
+      <button className="logo-button" onClick={handleStartGame}>
         Начать играть
       </button>
     </div>

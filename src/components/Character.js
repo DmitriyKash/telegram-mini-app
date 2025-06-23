@@ -9,7 +9,11 @@ function Character({ userId }) {
 
   useEffect(() => {
     const fetchCharacter = async () => {
-      if (!userId) return;
+      if (!userId) {
+        setError('Пользователь не выбран');
+        setLoading(false);
+        return;
+      }
       try {
         const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}`);
         if (res.ok) {
@@ -30,13 +34,16 @@ function Character({ userId }) {
   }, [userId]);
 
   if (loading) return <div>Загрузка персонажа...</div>;
-  if (error) return <div>{error}</div>;
+  if (error) return <div style={{ color: 'red' }}>{error}</div>;
 
   if (!characterData) return <div>Данные персонажа не найдены</div>;
 
   return (
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
-      <h2>{characterData.name} [{characterData.level}]</h2>
+      {/* Название и уровень */}
+      <h2>
+        {characterData.firstName} [{characterData.level}]
+      </h2>
       
       {/* Аватар */}
       <div style={{ margin: '20px 0' }}>
@@ -53,7 +60,7 @@ function Character({ userId }) {
         <p>Ловкость: {characterData.agility}</p>
         <p>Удача: {characterData.luck}</p>
         <p>Здоровье: {characterData.health}</p>
-        {/* Добавьте другие характеристики по необходимости */}
+        {/* Можно добавить другие параметры */}
       </div>
       
       {/* Меню или дополнительные вкладки */}
