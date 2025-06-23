@@ -62,7 +62,7 @@ function Character({ userId }) {
       {/* Аватар */}
       <div className="avatar-wrapper">
         <img
-          src={characterData.avatarUrl}
+          src={characterData.avatar_Url}
           alt="Персонаж"
           className="avatar-img"
         />
