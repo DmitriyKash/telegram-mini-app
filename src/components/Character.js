@@ -15,7 +15,7 @@ function Character({ userId }) {
         return;
       }
       try {
-        const res = await fetch(`${API_BASE_URL}/api/get_character/${user.id}`);
+        const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}`);
         if (res.ok) {
           const data = await res.json();
           setCharacterData(data);
