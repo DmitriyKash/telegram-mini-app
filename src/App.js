@@ -63,9 +63,9 @@ function App() {
     setStarted(true);
   };
 
-  if (level === null && !started) {
-    return <div>Загрузка...</div>;
-  }
+//   if (level === null && !started) {
+//     return <div>Загрузка...</div>;
+//   }
 
   if (started) {
     return <Character userId={user?.id} />;
