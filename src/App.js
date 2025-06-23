@@ -58,21 +58,21 @@ function App() {
   }, [user?.id]);
 
   // Сохранение прогресса
-  const saveProgress = async (newLevel) => {
-    if (!user) return;
-    try {
-      await fetch(`${API_BASE_URL}/api/save_progress`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user.id,
-          level: newLevel,
-        }),
-      });
-    } catch (error) {
-      console.error('Ошибка при сохранении прогресса:', error);
-    }
-  };
+//   const saveProgress = async (newLevel) => {
+//     if (!user) return;
+//     try {
+//       await fetch(`${API_BASE_URL}/api/save_progress`, {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//           userId: user.id,
+//           level: newLevel,
+//         }),
+//       });
+//     } catch (error) {
+//       console.error('Ошибка при сохранении прогресса:', error);
+//     }
+//   };
 
   // Обработчик начала игры
   const handleStartGame = () => {
@@ -80,14 +80,14 @@ function App() {
   };
 
   // Обработчик повышения уровня (для теста)
-  const handleLevelUp = () => {
-    setLevel(prev => {
-      const newLevel = (prev ?? 0) + 1;
-      saveProgress(newLevel);
-      if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${newLevel}`);
-      return newLevel;
-    });
-  };
+//   const handleLevelUp = () => {
+//     setLevel(prev => {
+//       const newLevel = (prev ?? 0) + 1;
+//       saveProgress(newLevel);
+//       if (tg) tg.showAlert(`Поздравляем! Вы достигли уровня ${newLevel}`);
+//       return newLevel;
+//     });
+//   };
 
   // Пока уровень не загружен, показываем индикатор
   if (level === null && !started) {
