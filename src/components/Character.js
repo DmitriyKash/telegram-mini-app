@@ -6,33 +6,16 @@ function Character({ userId }) {
   const [error, setError] = useState(null);
   const API_BASE_URL = 'http://localhost:8000';
 
-  // Получение данных из Telegram
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    const telegram = window.Telegram?.WebApp;
-    if (telegram) {
-      telegram.ready();
-      const initData = telegram.initDataUnsafe;
-      if (initData?.user?.id) {
-        setUser({
-          id: initData.user.id,
-          firstName: initData?.user?.first_name,
-          lastName: initData?.user?.last_name,
-        });
-      }
-    }
-  }, []);
-
-  // Загрузка данных персонажа
+  // Загружаем персонажа по userId
   useEffect(() => {
     const fetchCharacter = async () => {
-      if (!user?.id) {
+      if (!userId) {
         setError('Пользователь не выбран');
         setLoading(false);
         return;
       }
       try {
-        const res = await fetch(`${API_BASE_URL}/api/get_character/${user.id}`);
+        const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}`);
         if (res.ok) {
           const data = await res.json();
           setCharacterData(data);
@@ -48,7 +31,7 @@ function Character({ userId }) {
     };
 
     fetchCharacter();
-  }, [user]);
+  }, [userId]);
 
   if (loading) return <div>Загрузка персонажа...</div>;
   if (error) return <div style={{ color: 'red' }}>{error}</div>;
@@ -57,7 +40,8 @@ function Character({ userId }) {
     <div className="character-container">
       {/* Название и уровень */}
       <div className="character-name">
-        {user?.firstName} [{characterData.level}]
+        {/* Можно добавить отображение имени, если есть */}
+        {characterData.name} [{characterData.level}]
       </div>
       
       {/* Аватар */}
