@@ -5,3 +5,23 @@
   background-position: center; /* центрирование изображения */
   background-repeat: no-repeat; /* чтобы изображение не повторялось */
 }
+
+.button {
+  background: linear-gradient(135deg, #ff4500, #8a2be2); /* яркий контраст: огненно-оранжевый и фиолетовый */
+  color: #fff;
+  border: 2px solid #ffcc00;
+  font-family: 'Cinzel Decorative', cursive; /* стилизованный шрифт под фэнтези */
+  font-size: 20px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px #ffcc00, 0 0 20px #8a2be2;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 3px #000;
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #ff6347, #7b68ee);
+  box-shadow: 0 0 16px #ffd700, 0 0 28px #9400d3;
+  transform: scale(1.05);
+}
