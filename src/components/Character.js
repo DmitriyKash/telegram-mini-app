@@ -9,11 +9,6 @@ function Character({ userId }) {
   // Загружаем персонажа по userId
   useEffect(() => {
     const fetchCharacter = async () => {
-      if (!userId) {
-        setError('Пользователь не выбран');
-        setLoading(false);
-        return;
-      }
       try {
         const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}`);
         if (res.ok) {
