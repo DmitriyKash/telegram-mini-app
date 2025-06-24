@@ -9,7 +9,7 @@ function Character({ userId }) {
   useEffect(() => {
     const fetchCharacter = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}`);
+        const res = await fetch(`${API_BASE_URL}/api/get_character/241541`);
         if (res.ok) {
           const data = await res.json();
           setCharacterData(data);
