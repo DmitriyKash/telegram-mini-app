@@ -6,7 +6,6 @@ function Character({ userId }) {
   const [error, setError] = useState(null);
   const API_BASE_URL = 'http://192.168.0.131:8000';
 
-  // Загружаем персонажа по userId
   useEffect(() => {
     const fetchCharacter = async () => {
       try {
@@ -31,11 +30,13 @@ function Character({ userId }) {
   if (loading) return <div>Загрузка персонажа...</div>;
   if (error) return <div style={{ color: 'red' }}>{error}</div>;
 
+  // Проверка наличия данных
+  if (!characterData) return <div>Данные персонажа не найдены.</div>;
+
   return (
     <div className="character-container">
       {/* Название и уровень */}
       <div className="character-name">
-        {/* Можно добавить отображение имени, если есть */}
         {characterData.name} [{characterData.level}]
       </div>
       

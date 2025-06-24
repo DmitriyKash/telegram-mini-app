@@ -17,8 +17,8 @@ function App() {
       if (initData?.user?.id) {
         setUser({
           id: initData.user.id,
-          firstName: initData?.user?.first_name,
-          lastName: initData?.user?.last_name,
+          firstName: initData.user.first_name,
+          lastName: initData.user.last_name,
         });
       } else {
         console.error('Данные пользователя из initDataUnsafe недоступны или некорректны');
