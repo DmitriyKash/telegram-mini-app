@@ -18,7 +18,7 @@ function Character({ userId }) {
         }
       } catch (err) {
         console.error('Ошибка при получении данных персонажа:', err);
-        setError('Ошибка загрузки данных персонажа');
+        setError('Ошибка загрузки данных персонажа a');
       } finally {
         setLoading(false);
       }
