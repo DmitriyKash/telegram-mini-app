@@ -4,7 +4,7 @@ function Character({ userId }) {
   const [characterData, setCharacterData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const API_BASE_URL = 'http://192.168.0.131';
+  const API_BASE_URL = 'http://192.168.0.131:80';
 
   useEffect(() => {
     const fetchCharacter = async () => {
