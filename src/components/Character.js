@@ -51,7 +51,29 @@ function Character({ userId, firstName }) {
       <div className="character-name">
         {characterData.name} [{characterData.level}]
       </div>
-      
+      <div className="inventory-grid">
+      {/* Левая колонка */}
+      <div className="cell top-left">🛡️</div>
+      <div className="cell middle-left">💍</div>
+      <div className="cell bottom-left">🗡️</div>
+
+      {/* Центральная ячейка */}
+      <div className="cell middle-center">
+        <img src={characterData.avatar_url} alt="Character" className="avatar-img" />
+      </div>
+
+      {/* Правая колонка */}
+      <div className="cell top-right">🚜</div>
+      <div className="cell middle-right">🔧</div>
+      <div className="cell bottom-right">🛠️</div>
+
+      {/* Нижние слоты предметов */}
+      <div className="bottom-slots">
+        <div className="slot">💎</div>
+        <div className="slot">❤️</div>
+        <div className="slot">💖</div>
+      </div>
+    </div>
       {/* Аватар */}
       <div className="avatar-wrapper">
         <img

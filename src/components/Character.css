@@ -63,3 +63,79 @@
 .buttons-container button:hover {
   background-color: #45a049;
 }
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: 50px 150px 50px;
+  grid-template-rows: auto auto auto auto;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 400px; /* или по необходимости */
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Расположение ячеек по сетке */
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f0f0; /* фон для наглядности */
+  border: 1px solid #ccc;
+  height: 50px;
+}
+
+/* Размещение ячеек по позициям */
+.top-left {
+  grid-column: 1;
+  grid-row: 1;
+}
+.middle-left {
+  grid-column: 1;
+  grid-row: 2;
+}
+.bottom-left {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.middle-center {
+  grid-column: 2;
+  grid-row: 2;
+  background: #fff; /* чтобы выделить центральное изображение */
+  padding: 5px;
+}
+
+.top-right {
+  grid-column: 3;
+  grid-row: 1;
+}
+.middle-right {
+  grid-column: 3;
+  grid-row: 2;
+}
+.bottom-right {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+/* Нижние слоты */
+.bottom-slots {
+  grid-column: 2 / span 1;
+  grid-row: 4;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.slot {
+  width: 50px;
+  height: 50px;
+  background: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
