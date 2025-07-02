@@ -1,71 +1,48 @@
 import { useEffect, useState } from 'react';
 
-function Character({ userId }) {
+function Character({ userId, firstname }) {
   const [characterData, setCharacterData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const API_BASE_URL = 'https://55b5-37-57-145-0.ngrok-free.app';
 
-useEffect(() => {
-  const controller = new AbortController();
+  useEffect(() => {
+    const controller = new AbortController();
 
-  // const fetchCharacter = async () => {
-  //   try {
-  //     const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}`, {
-  //       signal: controller.signal,
-  //     });
-  //     if (res.ok) {
-  //       const data = await res.json();
-  //       setCharacterData(data);
-  //     } else {
-  //       setError('Ошибка загрузки данных персонажа');
-  //     }
-  //   } catch (err) {
-  //     if (err.name !== 'AbortError') {
-  //       console.error('Ошибка при получении данных персонажа:', err);
-  //       setError('Ошибка загрузки данных персонажа');
-  //     }
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+    const fetchCharacter = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}?firstname=${encodeURIComponent(firstname)}`, {
+          signal: controller.signal,
+          headers: {
+            'ngrok-skip-browser-warning': '1',
+          },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setCharacterData(data);
+        } else {
+          setError('Ошибка загрузки данных персонажа');
+        }
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Ошибка при получении данных персонажа:', err);
+          setError('Ошибка загрузки данных персонажа');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // fetchCharacter();
+    fetchCharacter();
 
-const fetchCharacter = async () => {
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}?firstname=${encodeURIComponent(firstname)}`, {
-      signal: controller.signal,
-      headers: {
-        'ngrok-skip-browser-warning': '1',
-      },
-    });
-    if (res.ok) {
-      const data = await res.json();
-      setCharacterData(data);
-    } else {
-      setError('Ошибка загрузки данных персонажа');
-    }
-  } catch (err) {
-    if (err.name !== 'AbortError') {
-      console.error('Ошибка при получении данных персонажа:', err);
-      setError('Ошибка загрузки данных персонажа');
-    }
-  } finally {
-    setLoading(false);
-  }
-};
-
-  return () => {
-    // Отменяем запрос при размонтировании или изменении userId
-    controller.abort();
-  };
-}, [userId]);
+    return () => {
+      controller.abort();
+    };
+  }, [userId, firstname]); // добавьте 'firstname' в зависимости
 
   if (loading) return <div>Загрузка персонажа...</div>;
   if (error) return <div style={{ color: 'red' }}>{error}</div>;
 
-  // Проверка наличия данных
   if (!characterData) return <div>Данные персонажа не найдены.</div>;
 
   return (
