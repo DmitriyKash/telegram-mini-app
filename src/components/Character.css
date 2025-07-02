@@ -79,7 +79,7 @@
 /* Расположение ячеек по сетке */
 .cell {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   background: #f0f0f0; /* фон для наглядности */
   border: 1px solid #ccc;
