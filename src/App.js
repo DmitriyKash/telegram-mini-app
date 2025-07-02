@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Character from './components/Character';
+import GameInterface from './components/GameInterface';
 import './App.css';
 
 function App() {
@@ -46,8 +47,11 @@ function App() {
   }
 
   // После начала игры
-  if (started) {
-    return <Character userId={user.id} firstName={user.firstName} />;
+  // if (started) {
+  //   return <Character userId={user.id} firstName={user.firstName} />;
+  // }
+    if (started) {
+    return <GameInterface userId={user.id} firstName={user.firstName} />;
   }
 
   // Экран приветствия
