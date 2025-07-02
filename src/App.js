@@ -47,7 +47,7 @@ function App() {
 
   // После начала игры
   if (started) {
-    return <Character userId={user.id} />;
+    return <Character userId={user.id} firstName={user.firstName} />;
   }
 
   // Экран приветствия

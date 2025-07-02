@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function Character({ userId, firstname }) {
+function Character({ userId, firstName }) {
   const [characterData, setCharacterData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ function Character({ userId, firstname }) {
 
     const fetchCharacter = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}?firstname=${encodeURIComponent(firstname)}`, {
+        const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}?firstname=${encodeURIComponent(firstName)}`, {
           signal: controller.signal,
           headers: {
             'ngrok-skip-browser-warning': '1',
@@ -38,11 +38,10 @@ function Character({ userId, firstname }) {
     return () => {
       controller.abort();
     };
-  }, [userId, firstname]); // добавьте 'firstname' в зависимости
+  }, [userId, firstName]);
 
   if (loading) return <div>Загрузка персонажа...</div>;
   if (error) return <div style={{ color: 'red' }}>{error}</div>;
-
   if (!characterData) return <div>Данные персонажа не найдены.</div>;
 
   return (
