@@ -23,7 +23,7 @@
 }
 
 .avatar-img {
-  width: 140px;
+  width: 150px;
   height: 180px;
   object-fit: cover;
   border-radius: 10px;
@@ -68,7 +68,7 @@
   display: grid;
   grid-template-columns: 50px 150px 50px;
   grid-template-rows: auto auto auto auto;
-  gap: 10px;
+  gap: 2px;
   justify-content: center;
   align-items: center;
   width: 400px; /* или по необходимости */
