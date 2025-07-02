@@ -4,7 +4,7 @@ function Character({ userId }) {
   const [characterData, setCharacterData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const API_BASE_URL = 'http://192.168.0.131:80';
+  const API_BASE_URL = 'https://55b5-37-57-145-0.ngrok-free.app';
 
   useEffect(() => {
     const fetchCharacter = async () => {
