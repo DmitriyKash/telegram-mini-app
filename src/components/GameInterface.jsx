@@ -18,7 +18,25 @@ function GameInterface() {
           <button onClick={() => window.location='main.php?go=ret'}>���������</button>
         </div>
         <div className="exit-link">
-          <a href="#" onClick={() => alert('Выход')}>Выход</a>
+          {/* заменили <a> на <button> */}
+          <button
+            onClick={() => alert('Выход')}
+            style={{
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer'
+            }}
+            aria-label="Выход"
+          >
+            <img
+              src="http://image.neverlands.ru/exit.gif"
+              alt="Выход"
+              width={15}
+              height={15}
+              style={{ verticalAlign: 'middle' }}
+            />
+          </button>
         </div>
       </div>
 
@@ -50,7 +68,7 @@ function GameInterface() {
             <button>�������</button>
             <button>����� DNV</button>
             <button>����-������</button>
-            {/* Другие кнопки */}
+            {/* Другие кнопки можно добавить здесь */}
           </div>
         </div>
       </div>
@@ -63,7 +81,7 @@ function GameInterface() {
           <p>��������: 46 (37+9)</p>
           {/* Другие показатели */}
         </div>
-        {/* Другие блоки, сообщения, эффекты и т.п. */}
+        {/* Можно добавить дополнительные блоки и сообщения */}
       </div>
     </div>
   );
