@@ -9,28 +9,54 @@ function Character({ userId }) {
 useEffect(() => {
   const controller = new AbortController();
 
-  const fetchCharacter = async () => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}`, {
-        signal: controller.signal,
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setCharacterData(data);
-      } else {
-        setError('Ошибка загрузки данных персонажа');
-      }
-    } catch (err) {
-      if (err.name !== 'AbortError') {
-        console.error('Ошибка при получении данных персонажа:', err);
-        setError('Ошибка загрузки данных персонажа');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchCharacter = async () => {
+  //   try {
+  //     const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}`, {
+  //       signal: controller.signal,
+  //     });
+  //     if (res.ok) {
+  //       const data = await res.json();
+  //       setCharacterData(data);
+  //     } else {
+  //       setError('Ошибка загрузки данных персонажа');
+  //     }
+  //   } catch (err) {
+  //     if (err.name !== 'AbortError') {
+  //       console.error('Ошибка при получении данных персонажа:', err);
+  //       setError('Ошибка загрузки данных персонажа');
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  fetchCharacter();
+  // fetchCharacter();
+  
+  const fetchCharacter = async () => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}`, {
+      signal: controller.signal,
+      headers: {
+        'ngrok-skip-browser-warning': '1', // добавляем нужный заголовок
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setCharacterData(data);
+    } else {
+      setError('Ошибка загрузки данных персонажа');
+    }
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      console.error('Ошибка при получении данных персонажа:', err);
+      setError('Ошибка загрузки данных персонажа');
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
+fetchCharacter();
 
   return () => {
     // Отменяем запрос при размонтировании или изменении userId
