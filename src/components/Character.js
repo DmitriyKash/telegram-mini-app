@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './Character.css'
 
 function Character({ userId, firstName }) {
   const [characterData, setCharacterData] = useState(null);
