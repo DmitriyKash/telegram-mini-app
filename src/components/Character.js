@@ -76,10 +76,6 @@ function Character({ userId, firstName }) {
         </div>
       </div>
 
-      {/* Дополнительные детали */}
-      <div className="avatar-wrapper">
-        <img src={characterData.avatar_url} alt="Персонаж" className="avatar-img" />
-      </div>
 
       <div className="stats">
         <p>Сила: {characterData.strength}</p>
