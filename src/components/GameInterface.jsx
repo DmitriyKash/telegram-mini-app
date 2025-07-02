@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './GameInterface.css';
 
-function GameInterface( userId, firstName ) {
+function GameInterface({ userId, firstName }) {
       const [characterData, setCharacterData] = useState(null);
       const [loading, setLoading] = useState(true);
       const [error, setError] = useState(null);
