@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Character from './components/Character';
+// import Character from './components/Character';
 import GameInterface from './components/GameInterface';
 import './App.css';
 

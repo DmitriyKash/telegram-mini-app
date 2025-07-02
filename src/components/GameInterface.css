@@ -1,0 +1,108 @@
+/* Общие стили */
+.game-container {
+  font-family: Arial, sans-serif;
+  width: 1000px;
+  margin: 0 auto;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Верхняя панель */
+.top-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fcfaf3;
+  padding: 5px 10px;
+  border-bottom: 2px solid #ccc;
+}
+.player-info {
+  display: flex;
+  align-items: center;
+}
+.nickname {
+  font-weight: bold;
+  font-size: 16px;
+  margin-right: 10px;
+}
+.hp-bar {
+  width: 150px;
+  height: 10px;
+  background: #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.hp-progress {
+  height: 100%;
+  background: red;
+  width: 70%; /* пример HP */
+}
+.buttons button {
+  margin: 0 5px;
+  padding: 5px 10px;
+}
+.exit-link {
+  font-size: 14px;
+}
+
+/* Основной блок */
+.main-content {
+  display: flex;
+  margin-top: 10px;
+}
+
+/* Левая колонка */
+.left-column {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.slot {
+  width: 80px;
+  height: 80px;
+  background: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+/* Центральная часть */
+.center-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+}
+
+/* Правая колонка */
+.right-column {
+  width: 200px;
+  padding-left: 10px;
+}
+.money-info {
+  margin-bottom: 10px;
+}
+.menu-buttons button {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+/* Нижняя секция с статистикой */
+.bottom-section {
+  margin-top: 15px;
+}
+.stats {
+  background: #fafafa;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
