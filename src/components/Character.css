@@ -23,8 +23,8 @@
 }
 
 .avatar-img {
-  width: 120px;
-  height: 160px;
+  width: 140px;
+  height: 180px;
   object-fit: cover;
   border-radius: 10px;
   border: 2px solid #ccc;
@@ -79,7 +79,7 @@
 /* Расположение ячеек по сетке */
 .cell {
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   background: #f0f0f0; /* фон для наглядности */
   border: 1px solid #ccc;
