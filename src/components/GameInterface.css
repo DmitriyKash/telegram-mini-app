@@ -1,4 +1,4 @@
-/* Общие стили */
+/* Общий контейнер */
 .game-container {
   font-family: Arial, sans-serif;
   width: 1000px;
@@ -16,7 +16,10 @@
   background: #fcfaf3;
   padding: 5px 10px;
   border-bottom: 2px solid #ccc;
+  position: relative;
 }
+
+/* Информация о игроке */
 .player-info {
   display: flex;
   align-items: center;
@@ -38,15 +41,25 @@
   background: red;
   width: 70%; /* пример HP */
 }
+
+/* Кнопки в верхней панели */
 .buttons button {
   margin: 0 5px;
   padding: 5px 10px;
+  cursor: pointer;
 }
-.exit-link {
-  font-size: 14px;
+.buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
-/* Основной блок */
+/* Кнопка выхода — без фона, с изображением */
+.exit-link {
+  position: absolute;
+  right: 10px;
+}
+
+/* Основной контент */
 .main-content {
   display: flex;
   margin-top: 10px;
@@ -67,9 +80,10 @@
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  font-size: 24px;
 }
 
-/* Центральная часть */
+/* Центр */
 .center-section {
   flex: 1;
   display: flex;
@@ -95,9 +109,10 @@
   display: block;
   width: 100%;
   margin-bottom: 5px;
+  cursor: pointer;
 }
 
-/* Нижняя секция с статистикой */
+/* Нижняя секция */
 .bottom-section {
   margin-top: 15px;
 }
