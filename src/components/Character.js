@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './Character.css'
+import './Character.css';
 
 function Character({ userId, firstName }) {
   const [characterData, setCharacterData] = useState(null);
@@ -12,12 +12,13 @@ function Character({ userId, firstName }) {
 
     const fetchCharacter = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}?firstname=${encodeURIComponent(firstName)}`, {
-          signal: controller.signal,
-          headers: {
-            'ngrok-skip-browser-warning': '1',
-          },
-        });
+        const res = await fetch(
+          `${API_BASE_URL}/api/get_character/${userId}?firstname=${encodeURIComponent(firstName)}`,
+          {
+            signal: controller.signal,
+            headers: { 'ngrok-skip-browser-warning': '1' },
+          }
+        );
         if (res.ok) {
           const data = await res.json();
           setCharacterData(data);
@@ -36,9 +37,7 @@ function Character({ userId, firstName }) {
 
     fetchCharacter();
 
-    return () => {
-      controller.abort();
-    };
+    return () => controller.abort();
   }, [userId, firstName]);
 
   if (loading) return <div>Загрузка персонажа...</div>;
@@ -51,47 +50,44 @@ function Character({ userId, firstName }) {
       <div className="character-name">
         {characterData.name} [{characterData.level}]
       </div>
+
+      {/* Раскладка ячеек */}
       <div className="inventory-grid">
-      {/* Левая колонка */}
-      <div className="cell top-left">🛡️</div>
-      <div className="cell middle-left">💍</div>
-      <div className="cell bottom-left">🗡️</div>
+        {/* Левая колонка */}
+        <div className="cell top-left">🛡️</div>
+        <div className="cell middle-left">💍</div>
+        <div className="cell bottom-left">🗡️</div>
 
-      {/* Центральная ячейка */}
-      <div className="cell middle-center">
-        <img src={characterData.avatar_url} alt="Character" className="avatar-img" />
+        {/* Центральное изображение */}
+        <div className="cell middle-center">
+          <img src={characterData.avatar_url} alt="Character" className="avatar-img" />
+        </div>
+
+        {/* Правая колонка */}
+        <div className="cell top-right">🚜</div>
+        <div className="cell middle-right">🔧</div>
+        <div className="cell bottom-right">🛠️</div>
+
+        {/* Нижние слоты */}
+        <div className="bottom-slots">
+          <div className="slot">💎</div>
+          <div className="slot">❤️</div>
+          <div className="slot">💖</div>
+        </div>
       </div>
 
-      {/* Правая колонка */}
-      <div className="cell top-right">🚜</div>
-      <div className="cell middle-right">🔧</div>
-      <div className="cell bottom-right">🛠️</div>
-
-      {/* Нижние слоты предметов */}
-      <div className="bottom-slots">
-        <div className="slot">💎</div>
-        <div className="slot">❤️</div>
-        <div className="slot">💖</div>
-      </div>
-    </div>
-      {/* Аватар */}
+      {/* Дополнительные детали */}
       <div className="avatar-wrapper">
-        <img
-          src={characterData.avatar_url}
-          alt="Персонаж"
-          className="avatar-img"
-        />
+        <img src={characterData.avatar_url} alt="Персонаж" className="avatar-img" />
       </div>
-      
-      {/* Характеристики */}
+
       <div className="stats">
         <p>Сила: {characterData.strength}</p>
         <p>Ловкость: {characterData.agility}</p>
         <p>Удача: {characterData.luck}</p>
         <p>Здоровье: {characterData.health}</p>
       </div>
-      
-      {/* Меню или дополнительные вкладки */}
+
       <div className="buttons-container">
         <button>Инвентарь</button>
         <button>Настройки</button>
