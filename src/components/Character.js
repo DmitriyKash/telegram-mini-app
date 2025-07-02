@@ -31,13 +31,13 @@ useEffect(() => {
   // };
 
   // fetchCharacter();
-  
-  const fetchCharacter = async () => {
+
+const fetchCharacter = async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}`, {
+    const res = await fetch(`${API_BASE_URL}/api/get_character/${userId}?firstname=${encodeURIComponent(firstname)}`, {
       signal: controller.signal,
       headers: {
-        'ngrok-skip-browser-warning': '1', // добавляем нужный заголовок
+        'ngrok-skip-browser-warning': '1',
       },
     });
     if (res.ok) {
@@ -55,8 +55,6 @@ useEffect(() => {
     setLoading(false);
   }
 };
-
-fetchCharacter();
 
   return () => {
     // Отменяем запрос при размонтировании или изменении userId
