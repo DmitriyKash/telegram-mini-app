@@ -22,7 +22,7 @@
 /* Информация о игроке */
 .player-info {
   display: flex;
-  align-items: self-start;
+  align-items: start;
 }
 .nickname {
   font-weight: bold;
