@@ -23,8 +23,8 @@
 }
 
 .avatar-img {
-  width: 130px;
-  height: 150px;
+  width: 150px;
+  height: 160px;
   object-fit: cover;
   border-radius: 10px;
   border: 2px solid #ccc;
