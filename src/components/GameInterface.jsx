@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Character from './Character';
 import './GameInterface.css';
 
 function GameInterface({ userId, firstName }) {
@@ -80,42 +81,43 @@ function GameInterface({ userId, firstName }) {
           </button>
         </div>
       </div>
-
-      {/* Основной контент */}
+        
+      {/* {/* Основной контент */}
       <div className="main-content">
+        <Character userId={user.id} firstName={user.firstName} />;
         {/* Левая колонка */}
-        <div className="left-column">
+        {/* <div className="left-column"> */}
           {/* Здесь можно вставить слоты или изображения */}
-          <div className="slot">🛡️</div>
-          <div className="slot">💍</div>
-          <div className="slot">🗡️</div>
-        </div>
+          {/* <div className="slot">🛡️</div> */}
+          {/* <div className="slot">💍</div> */}
+          {/* <div className="slot">🗡️</div> */}
+        {/* </div> */}
 
         {/* Центральная часть */}
-        <div className="center-section">
+        {/* <div className="center-section"> */}
           {/* Здесь ваше изображение персонажа */}
-          <img src={characterData.avatar_url} alt="Персонаж" className="avatar" />
-        </div>
+          {/* <img src={characterData.avatar_url} alt="Персонаж" className="avatar" /> */}
+        {/* </div> */}
 
         {/* Правая колонка */}
-        <div className="right-column">
-            <div className="slot">🛡️</div>
-            <div className="slot">💍</div>
-            <div className="slot">🗡️</div>
+        {/* <div className="right-column"> */}
+            {/* <div className="slot">🛡️</div> */}
+            {/* <div className="slot">💍</div> */}
+            {/* <div className="slot">🗡️</div> */}
           {/* Финансы и меню */}
-          <div className="money-info">
-            <div>NV: 66923.01</div>
-            <div>Gold: 66$</div>
-            <div>DNV: 0.12</div>
-          </div>
-          <div className="menu-buttons">
-            <button>�������</button>
-            <button>����� DNV</button>
-            <button>����-������</button>
+          {/* <div className="money-info"> */}
+            {/* <div>NV: 66923.01</div> */}
+            {/* <div>Gold: 66$</div> */}
+            {/* <div>DNV: 0.12</div>/ */}
+          {/* </div> */}
+          {/* <div className="menu-buttons"> */}
+            {/* <button>�������</button> */}
+            {/* <button>����� DNV</button> */}
+            {/* <button>����-������</button> */}
             {/* Другие кнопки можно добавить здесь */}
-          </div>
-        </div>
-      </div>
+          {/* </div> */}
+        {/* </div> */}
+      </div> 
 
       {/* Статистика и дополнительные блоки */}
       <div className="bottom-section">

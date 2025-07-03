@@ -45,48 +45,86 @@ function Character({ userId, firstName }) {
   if (!characterData) return <div>Данные персонажа не найдены.</div>;
 
   return (
-    <div className="character-container">
-      {/* Название и уровень */}
-      <div className="character-name">
-        {characterData.name} [{characterData.level}]
-      </div>
+    <div className="character_wrapper">
+      <h2>{characterData.name || `${firstName}`}</h2>
 
-      {/* Раскладка ячеек */}
-      <div className="inventory-grid">
-        {/* Левая колонка */}
-        <div className="cell top-left">🛡️</div>
-        <div className="cell middle-left">💍</div>
-        <div className="cell bottom-left">🗡️</div>
+      <div className="middle_block">
+        <div className="character_tab_content clearfix">
 
-        {/* Центральное изображение */}
-        <div className="cell middle-center">
-          <img src={characterData.avatar_url} alt="Character" className="avatar-img" />
+          {/* Верхние предметы */}
+          <div className="character_things_block clearfix">
+            {characterData.upperItems?.map((item, index) => (
+              <img
+                key={index}
+                src={item.img}
+                width="62"
+                height={item.height || 65}
+                title={item.tooltip}
+                alt={item.alt || 'Предмет'}
+              />
+            ))}
+          </div>
+
+          {/* Аватар и кольца */}
+          <div className="character_avatar_block">
+            <div className="avatar_block">
+              <img
+                src={characterData.avatar || 'http://image.neverlands.ru/obrazy/male_17.gif'}
+                width="115"
+                height="255"
+                alt="Аватар"
+              />
+            </div>
+            <div className="things_slots clearfix">
+              {characterData.rings?.map((ring, index) => (
+                <img
+                  key={index}
+                  src={ring.img}
+                  width="31"
+                  height="31"
+                  title={ring.tooltip}
+                  alt={ring.alt || 'Кольцо'}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Нижние предметы */}
+          <div className="character_things_block clearfix">
+            {characterData.lowerItems?.map((item, index) => (
+              <img
+                key={index}
+                src={item.img}
+                width="62"
+                height={item.height || 40}
+                title={item.tooltip}
+                alt={item.alt || 'Предмет'}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Правая колонка */}
-        <div className="cell top-right">🚜</div>
-        <div className="cell middle-right">🔧</div>
-        <div className="cell bottom-right">🛠️</div>
-
-        {/* Нижние слоты */}
-        <div className="bottom-slots">
-          <div className="slot">💎</div>
-          <div className="slot">❤️</div>
-          <div className="slot">💖</div>
+        {/* Статусы */}
+        <div className="character_hp_block" style={{ height: '182px', marginTop: 0 }} />
+        <div style={{ position: 'relative', left: '1px', top: '3px' }}>
+          {characterData.beltSlots?.map((slot, index) => (
+            <img
+              key={index}
+              src={slot.img}
+              width="20"
+              height="20"
+              title={slot.tooltip}
+              alt={slot.alt || 'Слот пояса'}
+            />
+          ))}
         </div>
-      </div>
+        <div className="character_mp_block" style={{ height: '182px', marginTop: 0 }} />
 
-
-      <div className="stats">
-        <p>Сила: {characterData.strength}</p>
-        <p>Ловкость: {characterData.agility}</p>
-        <p>Удача: {characterData.luck}</p>
-        <p>Здоровье: {characterData.health}</p>
-      </div>
-
-      <div className="buttons-container">
-        <button>Инвентарь</button>
-        <button>Настройки</button>
+        {/* HP/MP */}
+        <div className="character_info_bottom">
+          <div className="hp">{characterData.hp || '????/????'}</div>
+          <div className="mp">{characterData.mp || '????/????'}</div>
+        </div>
       </div>
     </div>
   );
