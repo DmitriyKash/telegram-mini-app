@@ -46,7 +46,7 @@ function Character({ userId, firstName }) {
 
   return (
     <div className="character_wrapper">
-      <h2>{characterData.name || `${firstName}`}</h2>
+      {/* <h2>{characterData.name || `${firstName}`}</h2> */}
 
       <div className="middle_block">
         <div className="character_tab_content clearfix">
