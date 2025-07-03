@@ -69,7 +69,7 @@ function Character({ userId, firstName }) {
           <div className="character_avatar_block">
             <div className="avatar_block">
               <img
-                src={characterData.avatar || 'http://image.neverlands.ru/obrazy/male_17.gif'}
+                src={characterData.avatar_url || 'http://image.neverlands.ru/obrazy/male_17.gif'}
                 width="115"
                 height="255"
                 alt="Аватар"
