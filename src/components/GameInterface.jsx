@@ -84,7 +84,7 @@ function GameInterface({ userId, firstName }) {
         
       {/* {/* Основной контент */}
       <div className="main-content">
-        <Character userId={user.id} firstName={user.firstName} />;
+        <Character userId={userId} firstName={firstName} />;
         {/* Левая колонка */}
         {/* <div className="left-column"> */}
           {/* Здесь можно вставить слоты или изображения */}
